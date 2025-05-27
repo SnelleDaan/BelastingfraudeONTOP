@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, balanced_accuracy_score
+from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 import seaborn as sns
 from ucimlrepo import fetch_ucirepo 
 
@@ -37,8 +37,11 @@ def linear_data():
     for C in C_values:
         clf = SVC(C=C, kernel='linear')
         clf.fit(X_train, y_train)
-        acc = clf.score(X_test, y_test)
-        print(f"C = {C:<7} -> Accuracy: {acc:.4f}")
+        y_pred = clf.predict(X_test)
+        acc = accuracy_score(y_test, y_pred)
+        bacc = balanced_accuracy_score(y_test, y_pred)
+        f1 = f1_score(y_test, y_pred, average='weighted')
+        print(f"C = {C:<7} -> Accuracy={acc:.3f} -> b_accuracy={bacc:.3f} -> f1={f1:.3f}")
 
     # Fit best
     clf = SVC(C=1000000, kernel='linear')
@@ -110,7 +113,7 @@ def non_linear_data():
     X_test_scaled = scaler.transform(X_test)
 
     # SVM with RBF
-    clf = SVC(C = 2, kernel = 'rbf', gamma = 0.01)
+    clf = SVC(C = 10, kernel = 'rbf', gamma = 0.1)
     clf.fit(X_train_scaled, y_train)
 
     # Predict
@@ -118,7 +121,8 @@ def non_linear_data():
 
     # Evaluation
     print("Accuracy:", accuracy_score(y_test, y_pred))
-    print("Balanced Accuracy:\n", balanced_accuracy_score(y_test, y_pred))
+    print("Balanced Accuracy:", balanced_accuracy_score(y_test, y_pred))
+    print("F1_score:", f1_score(y_test, y_pred, average='weighted'))
 
 
     # Test C and Gamma values
@@ -128,7 +132,9 @@ def non_linear_data():
             clf.fit(X_train_scaled, y_train)
             y_pred = clf.predict(X_test_scaled)
             acc = accuracy_score(y_test, y_pred)
-            print(f"C={C}, gamma={gamma} => accuracy={acc:.3f}")
+            bacc = balanced_accuracy_score(y_test, y_pred)
+            f1 = f1_score(y_test, y_pred, average='weighted')
+            print(f"C={C}, gamma={gamma} => accuracy={acc:.3f} => b_accuracy={bacc:.3f} => f1={f1:.3f}")
 
 
     # Making the PCA

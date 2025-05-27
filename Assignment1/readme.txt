@@ -1,0 +1,1 @@
+De datasets worden automatisch ingeladen via de fetch_ucirepo package van ucimlrepo. Zorg dat je ucimlrepo geinstaleerd hebt op je python versie.
