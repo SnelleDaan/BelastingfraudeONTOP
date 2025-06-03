@@ -69,141 +69,140 @@ numeric_cols = df.select_dtypes(include=['number']).columns
 
 X_train_const_m = sm.add_constant(Xmen_train)
 X_train_const_v = sm.add_constant(Xwomen_train)
-
+###################### data gecleaned #######################################
 # model_m = sm.OLS(ymen_train, X_train_const_m).fit()
 # model_v = sm.OLS(ywomen_train, X_train_const_v).fit()
-# # print(X_train_const_m.isnull().sum())
-# # print(any(X_train_const_m.isna()))
 # Xmen_test = sm.add_constant(Xmen_test)
 # Xwomen_test = sm.add_constant(Xwomen_test)
 
 # pred_m = model_m.predict(Xmen_test)
 # pred_v = model_v.predict(Xwomen_test)
-# print(pred_m)
 # r2_score_ols_m = r2_score(ymen_test,pred_m)
 # r2_score_ols_v = r2_score(ywomen_test ,pred_v)
 # plt.plot(pred_m, 'o', color='r')
 # plt.plot(ymen_test, 'o', color='b')
 # plt.show()
-# print(r2_score_ols_m, r2_score_ols_v)
-# # data heeft duidelijk geen linear model
+# print("R² score:", r2_score_ols_m, r2_score_ols_v)
+# data heeft duidelijk geen linear model
+## r2 score van -0.009876873717058254 -0.01579585026226038
+############################ Linear regression models. werken erg slecht ##########################################################
+
+dtr = DecisionTreeRegressor(random_state=42)
+dtr_GS = GridSearchCV(estimator=dtr, param_grid = {
+    'max_depth': [3, 5, 10, 20, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}, cv=5, scoring='r2')
+
+dtr_GS.fit(Xmen_train, ymen_train)
+best_tree = dtr_GS.best_estimator_
+pred_m_GS = best_tree.predict(Xmen_test)
+
+r2_score_dtr_m = r2_score(ymen_test, pred_m_GS)
+print("R² score:", r2_score_dtr_m)
+
+plt.plot(pred_m_GS, '.', color='r')
+plt.plot(ymen_test, '.', color='b')
+plt.show()
 
 
+dtr = DecisionTreeRegressor(random_state=42)
+dtr_GS = GridSearchCV(estimator=dtr, param_grid={
+    'max_depth': [3, 5, 10, 20, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}, cv=5, scoring='r2')
 
-# dtr = DecisionTreeRegressor(random_state=42)
-# dtr_GS = GridSearchCV(estimator=dtr, param_grid = {
-#     'max_depth': [3, 5, 10, 20, None],
-#     'min_samples_split': [2, 5, 10],
-#     'min_samples_leaf': [1, 2, 4]
-# }, cv=5, scoring='r2')
+dtr_GS.fit(Xwomen_train, ywomen_train)
+best_tree = dtr_GS.best_estimator_
+pred_w_GS = best_tree.predict(Xwomen_test)
 
-# dtr_GS.fit(Xmen_train, ymen_train)
-# best_tree = dtr_GS.best_estimator_
-# pred_m_GS = best_tree.predict(Xmen_test)
-
-# r2_score_dtr_m = r2_score(ymen_test, pred_m_GS)
-# print(r2_score_dtr_m)
-
-# plt.plot(pred_m_GS, '.', color='r')
-# plt.plot(ymen_test, '.', color='b')
-# plt.show()
+# r2_score_dtr_w = r2_score(ywomen_test, pred_w_GS)
 
 
-# dtr = DecisionTreeRegressor(random_state=42)
-# dtr_GS = GridSearchCV(estimator=dtr, param_grid={
-#     'max_depth': [3, 5, 10, 20, None],
-#     'min_samples_split': [2, 5, 10],
-#     'min_samples_leaf': [1, 2, 4]
-# }, cv=5, scoring='r2')
+plt.plot(pred_w_GS, '.', color='r')
+plt.plot(ywomen_test, '.', color='b')
+plt.show()
 
-# dtr_GS.fit(Xwomen_train, ywomen_train)
-# best_tree = dtr_GS.best_estimator_
-# pred_w_GS = best_tree.predict(Xwomen_test)
-
-# # r2_score_dtr_w = r2_score(ywomen_test, pred_w_GS)
-# # print(r2_score_dtr_w)
-
-# plt.plot(pred_w_GS, '.', color='r')
-# plt.plot(ywomen_test, '.', color='b')
-# plt.show()
-
-########################################### deze is ass ###################################################
+## r2-score: -0.0014732459682358368
+########################################### Decision tree regression, werkt ook erg slecht ###################################################
  
-# base_tree = DecisionTreeRegressor(random_state=42)
-# bagging = BaggingRegressor(estimator=base_tree, random_state=42)
+base_tree = DecisionTreeRegressor(random_state=42)
+bagging = BaggingRegressor(estimator=base_tree, random_state=42)
 
-# param_grid = {
-#     'n_estimators': [10, 50, 100, 200],
-#     'max_samples': [0.6, 0.8, 1.0],
-#     'max_features': [0.6, 0.8, 1.0]
-# }
+param_grid = {
+    'n_estimators': [10, 50, 100, 200],
+    'max_samples': [0.6, 0.8, 1.0],
+    'max_features': [0.6, 0.8, 1.0]
+}
 
-# # GridSearchCV uitvoeren
-# grid_search = GridSearchCV(
-#     estimator=bagging,
-#     param_grid=param_grid,
-#     cv=5,
-#     scoring='r2',
-#     n_jobs=-1
-# )
-# grid_search.fit(Xmen_train, ymen_train)
-# best_bagging = grid_search.best_estimator_
-# y_pred = best_bagging.predict(Xmen_test)
+# GridSearchCV uitvoeren
+grid_search = GridSearchCV(
+    estimator=bagging,
+    param_grid=param_grid,
+    cv=5,
+    scoring='r2',
+    n_jobs=-1
+)
+grid_search.fit(Xmen_train, ymen_train)
+best_bagging = grid_search.best_estimator_
+y_pred = best_bagging.predict(Xmen_test)
 
+print("R² score:", r2_score(ymen_test, y_pred))
 
-
-# n_estimators_list = [1, 10, 50, 100, 200]
-# r2_scores = []
-# for n in n_estimators_list:
-#     model = BaggingRegressor(
-#         estimator=DecisionTreeRegressor(random_state=42),
-#         n_estimators=n,
-#         random_state=42
-#     )
-#     model.fit(Xmen_train, ymen_train)
-#     y_pred = model.predict(Xmen_test)
+n_estimators_list = [1, 10, 50, 100, 200]
+r2_scores = []
+for n in n_estimators_list:
+    model = BaggingRegressor(
+        estimator=DecisionTreeRegressor(random_state=42),
+        n_estimators=n,
+        random_state=42
+    )
+    model.fit(Xmen_train, ymen_train)
+    y_pred = model.predict(Xmen_test)
     
-#     r2_scores.append(r2_score(ymen_test, y_pred))
-# plt.plot(n_estimators_list, r2_scores, marker='o', label='R² Score')
-# plt.show()
+    r2_scores.append(r2_score(ymen_test, y_pred))
+plt.plot(n_estimators_list, r2_scores, marker='o', label='R² Score')
+plt.show()
 
-#################################### hoe meer trees hoe beter, maar alsnog slecht #########################
-
-
-# base_tree = DecisionTreeRegressor(max_depth=3, random_state=42)
-
-# ada = AdaBoostRegressor(estimator=base_tree, random_state=42)
-
-# param_grid = {
-#     'n_estimators': [10, 50, 100, 200],
-#     'learning_rate': [0.01, 0.1, 0.5, 1]
-# }
-# grid_search = GridSearchCV(
-#     estimator=ada,
-#     param_grid=param_grid,
-#     cv=5,
-#     scoring='neg_mean_squared_error',
-#     n_jobs=-1
-# )
-# grid_search.fit(Xmen_train, ymen_train)
-
-# best_ada = grid_search.best_estimator_
-# y_pred = best_ada.predict(Xmen_test)
-# print('r2_score: ', r2_score(ymen_test, y_pred))
-# n_estimators_list = [1, 10, 50, 100, 200]
-# r2_scores = []
-# for n in n_estimators_list:
-#     model = AdaBoostRegressor(estimator=DecisionTreeRegressor(max_depth=3), n_estimators=n, random_state=42)
-#     model.fit(Xmen_train, ymen_train)
-#     y_pred = model.predict(Xmen_test)
-#     r2_scores.append(r2_score(ymen_test, y_pred))
+## r2-score: -0.030741886333720325
+#################################### Bagging, hoe meer trees hoe beter, maar alsnog slecht #########################
 
 
-# plt.plot(n_estimators_list, r2_scores, marker='o', label='R² Score')
-# plt.show()
+base_tree = DecisionTreeRegressor(max_depth=3, random_state=42)
+
+ada = AdaBoostRegressor(estimator=base_tree, random_state=42)
+
+param_grid = {
+    'n_estimators': [10, 50, 100, 200],
+    'learning_rate': [0.01, 0.1, 0.5, 1]
+}
+grid_search = GridSearchCV(
+    estimator=ada,
+    param_grid=param_grid,
+    cv=5,
+    scoring='neg_mean_squared_error',
+    n_jobs=-1
+)
+grid_search.fit(Xmen_train, ymen_train)
+
+best_ada = grid_search.best_estimator_
+y_pred = best_ada.predict(Xmen_test)
+print('r2_score: ', r2_score(ymen_test, y_pred))
+n_estimators_list = [1, 10, 50, 100, 200]
+r2_scores = []
+for n in n_estimators_list:
+    model = AdaBoostRegressor(estimator=DecisionTreeRegressor(max_depth=3), n_estimators=n, random_state=42)
+    model.fit(Xmen_train, ymen_train)
+    y_pred = model.predict(Xmen_test)
+    r2_scores.append(r2_score(ymen_test, y_pred))
 
 
-######################## r2 score rond de 0 wanneer de n_estimator 10 of hoger is. nogsteeds is een r2 score rond de 0 niet super goed, maar wel de beste tot nu toe ##################
+plt.plot(n_estimators_list, r2_scores, marker='o', label='R² Score')
+plt.show()
+
+## r2-score: -0.0044757761315052935
+######################## Boosting, r2 score rond de 0 wanneer de n_estimator 10 of hoger is. nogsteeds is een r2 score rond de 0 niet super goed, maar wel de beste tot nu toe ##################
 
 rf = RandomForestRegressor(random_state=42)
 param_grid = {
@@ -236,7 +235,7 @@ for n in n_estimators_list:
 plt.plot(n_estimators_list, r2_scores, marker='o', label='R² Score')
 plt.show()
 
-
+## r2-score: -0.024266085916314406
 ########## r2 score van -0.02, slechter dan de vorige. wel duidelijk te zien hoe hoger de n_estimator hoe beter het wordt. ##########################
 
 # Neem de feature importances van het beste Random Forest model
