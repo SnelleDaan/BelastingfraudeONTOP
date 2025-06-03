@@ -9,6 +9,7 @@ from sklearn.metrics import confusion_matrix, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeRegressor, plot_tree
 import statsmodels.api as sm
 import seaborn as sns
 
@@ -78,10 +79,52 @@ X_train_const_v = sm.add_constant(Xwomen_train)
 # pred_m = model_m.predict(Xmen_test)
 # pred_v = model_v.predict(Xwomen_test)
 # print(pred_m)
-# r2_score_m = r2_score(ymen_test,pred_m)
-# r2_score_v = r2_score(ywomen_test ,pred_v)
+# r2_score_ols_m = r2_score(ymen_test,pred_m)
+# r2_score_ols_v = r2_score(ywomen_test ,pred_v)
 # plt.plot(pred_m, 'o', color='r')
 # plt.plot(ymen_test, 'o', color='b')
 # plt.show()
-# print(r2_score_m, r2_score_v)
+# print(r2_score_ols_m, r2_score_ols_v)
 # # data heeft duidelijk geen linear model
+
+
+
+# dtr = DecisionTreeRegressor(random_state=42)
+# dtr_GS = GridSearchCV(estimator=dtr, param_grid = {
+#     'max_depth': [3, 5, 10, 20, None],
+#     'min_samples_split': [2, 5, 10],
+#     'min_samples_leaf': [1, 2, 4]
+# }, cv=5, scoring='r2')
+
+# dtr_GS.fit(Xmen_train, ymen_train)
+# best_tree = dtr_GS.best_estimator_
+# pred_m_GS = best_tree.predict(Xmen_test)
+
+# r2_score_dtr_m = r2_score(ymen_test, pred_m_GS)
+# print(r2_score_dtr_m)
+
+# plt.plot(pred_m_GS, '.', color='r')
+# plt.plot(ymen_test, '.', color='b')
+# plt.show()
+
+
+# dtr = DecisionTreeRegressor(random_state=42)
+# dtr_GS = GridSearchCV(estimator=dtr, param_grid={
+#     'max_depth': [3, 5, 10, 20, None],
+#     'min_samples_split': [2, 5, 10],
+#     'min_samples_leaf': [1, 2, 4]
+# }, cv=5, scoring='r2')
+
+# dtr_GS.fit(Xwomen_train, ywomen_train)
+# best_tree = dtr_GS.best_estimator_
+# pred_w_GS = best_tree.predict(Xwomen_test)
+
+# # r2_score_dtr_w = r2_score(ywomen_test, pred_w_GS)
+# # print(r2_score_dtr_w)
+
+# plt.plot(pred_w_GS, '.', color='r')
+# plt.plot(ywomen_test, '.', color='b')
+# plt.show()
+
+########################################### deze is ass ###################################################
+ 
