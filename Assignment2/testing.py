@@ -14,7 +14,7 @@ import seaborn as sns
 # Inladen data
 df = pd.read_csv('Assignment2/Life_Expectancy_Data_v2.csv')
 listocol = df.columns
-
+print(listocol)
 to_remove = ['Under-five deaths', 'GDP', 'thinness 5-9 years', 'Schooling']
 missing_percent = df.isnull().mean().sort_values(ascending=False) * 100
 print(missing_percent[missing_percent > 0])
@@ -39,8 +39,8 @@ yo = listocol.drop(['Country', 'Status'])
 #     plt.show()
     
 #columns with [infant deaths, percentage expenditure, measles, , HIV/AIDS] insane amounts of outliers
-col_outlier = ['Infant deaths', 'Percentage expenditure', 'Measles', 'HIV/AIDS', 'Total expenditure']
-for col in col_outlier:
-    plt.hist(df[col])
-    plt.title(col)
-    plt.show()
+# col_outlier = ['Infant deaths', 'Percentage expenditure', 'Measles', 'HIV/AIDS', 'Total expenditure']
+# for col in col_outlier:
+#     plt.hist(df[col])
+#     plt.title(col)
+#     plt.show()
