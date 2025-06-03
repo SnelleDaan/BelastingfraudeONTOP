@@ -3,12 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.decomposition import PCA
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV,train_test_split
 from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 from sklearn.preprocessing import LabelEncoder
+import statsmodels.api as sm
 import seaborn as sns
 
 # Inladen data
@@ -25,6 +26,7 @@ df['Alcohol'] = df['Alcohol'].fillna(df['Alcohol'].mean())
 df['Polio'] = df['Polio'].fillna(df['Polio'].mean())
 df['Total expenditure'] = df['Total expenditure'].fillna(df.groupby('Country')['Total expenditure'].transform('mean'))
 df['Total expenditure'] = df['Total expenditure'].fillna(df['Total expenditure'].mean())
+df['Diphtheria '] = df['Diphtheria '].fillna(df['Diphtheria '].mean())
 
 # drop deze want thinness 1-19 en 5-9 years missen allebei
 df = df.dropna(subset=['thinness  1-19 years'])
@@ -63,3 +65,23 @@ Xwomen_train, Xwomen_test, ywomen_train, ywomen_test = train_test_split(X_women,
 
 numeric_cols = df.select_dtypes(include=['number']).columns
 
+X_train_const_m = sm.add_constant(Xmen_train)
+X_train_const_v = sm.add_constant(Xwomen_train)
+
+# model_m = sm.OLS(ymen_train, X_train_const_m).fit()
+# model_v = sm.OLS(ywomen_train, X_train_const_v).fit()
+# # print(X_train_const_m.isnull().sum())
+# # print(any(X_train_const_m.isna()))
+# Xmen_test = sm.add_constant(Xmen_test)
+# Xwomen_test = sm.add_constant(Xwomen_test)
+
+# pred_m = model_m.predict(Xmen_test)
+# pred_v = model_v.predict(Xwomen_test)
+# print(pred_m)
+# r2_score_m = r2_score(ymen_test,pred_m)
+# r2_score_v = r2_score(ywomen_test ,pred_v)
+# plt.plot(pred_m, 'o', color='r')
+# plt.plot(ymen_test, 'o', color='b')
+# plt.show()
+# print(r2_score_m, r2_score_v)
+# # data heeft duidelijk geen linear model

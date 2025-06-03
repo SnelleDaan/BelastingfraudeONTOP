@@ -39,7 +39,7 @@ yo = listocol.drop(['Country', 'Status'])
 #     plt.show()
     
 #columns with [infant deaths, percentage expenditure, measles, , HIV/AIDS] insane amounts of outliers
-col_outlier = ['Infant deaths', 'Percentage expenditure', 'Measles', 'HIV/AIDS']
+col_outlier = ['Infant deaths', 'Percentage expenditure', 'Measles', 'HIV/AIDS', 'Total expenditure']
 for col in col_outlier:
     plt.hist(df[col])
     plt.title(col)
