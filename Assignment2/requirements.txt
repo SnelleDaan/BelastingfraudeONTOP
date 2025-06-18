@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib.pyplot
+seaborn
+ucimlrepo
+sklearn.svm
+sklearn.decomposition
+sklearn.model_selection
+sklearn.metrics
+sklearn.preprocessing
+sklearn.tree
+sklearn.ensemble
+statsmodels.api
