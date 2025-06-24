@@ -19,6 +19,7 @@ from scipy.signal import welch
 from sklearn.decomposition import KernelPCA
 import seaborn as sns
 from sklearn.decomposition import PCA
+import hdbscan
 import os
 
 #Opdracht 3a)
@@ -132,38 +133,6 @@ corrMatrix(df_b1_features)
 removeMultiColl(df_b1_features)
 df_b1_reduced = pd.read_csv('Eindopdracht/Opdracht3/bearing_features_reduced.csv')
 
-#Opdracht 3c)
-def Clustering(df_b1_clean, df_b1_features):
-    """
-    In deze functie worden de clusters gemaakt.
-    """
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(df_b1_clean)
-
-    kmeans = KMeans(n_clusters=5, random_state=42)
-    clusters = kmeans.fit_predict(X_scaled)
-
-    gmm = GaussianMixture(n_components=5, random_state=42)
-    labels = gmm.fit_predict(X_scaled)
-
-    df_b1_clean['cluster'] = labels
-    df_b1_features['cluster'] = labels
-
-    pca = PCA(n_components=2)
-    X_pca = pca.fit_transform(X_scaled)
-
-    plt.figure(figsize=(8, 5))
-    plt.scatter(X_pca[:, 0], X_pca[:, 1], c=clusters, cmap='viridis', s=50)
-    plt.title('PCA-visualisatie van clusters')
-    plt.xlabel('PC 1')
-    plt.ylabel('PC 2')
-    plt.colorbar(label='Cluster')
-    plt.grid(True)
-    plt.show()
-    return df_b1_features
-
-df_b1_clusters = Clustering(df_b1_reduced, df_b1_features)
-
 #Opdracht 3d)
 def InterpetClusters(df_b1_clusters):
     """
@@ -179,6 +148,61 @@ def InterpetClusters(df_b1_clusters):
     plt.ylabel('RMS b1x')
     plt.colorbar(label='Cluster')
     plt.show()
+    
+    
+#Opdracht 3c)
+def Clustering(df_b1_clean, df_b1_features):
+    """
+    In deze functie worden de clusters gemaakt.
+    """
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(df_b1_clean)
+
+    kmeans = KMeans(n_clusters=5, random_state=42)
+    clusters = kmeans.fit_predict(X_scaled)
+    
+    clusterer = hdbscan.HDBSCAN(min_cluster_size=40)
+    labels = clusterer.fit_predict(X_scaled)
+    
+    #gmm = GaussianMixture(n_components=5, random_state=42)
+    #labels = gmm.fit_predict(X_scaled)
+
+    wcss = []
+    for k in range(2, 6):
+        kmeans = KMeans(n_clusters=k, random_state=42).fit(X_scaled)
+        labels = kmeans.predict(X_scaled)
+        
+        df_b1_clean['cluster'] = labels
+        df_b1_features['cluster'] = labels
+        
+        wcss.append(kmeans.inertia_)  # inertia_ = WCSS
+        InterpetClusters(df_b1_features)
+
+    plt.plot(range(2, 6), wcss, marker='o')
+    plt.xlabel('Aantal clusters (k)')
+    plt.ylabel('WCSS')
+    plt.title('Elbow-methode')
+    plt.show()
+    
+
+
+    #pca = PCA(n_components=2)
+    #X_pca = pca.fit_transform(X_scaled)
+
+    # plt.figure(figsize=(8, 5))
+    # plt.scatter(X_pca[:, 0], X_pca[:, 1], c=clusters, cmap='viridis', s=50)
+    # plt.title('PCA-visualisatie van clusters')
+    # plt.xlabel('PC 1')
+    # plt.ylabel('PC 2')
+    # plt.colorbar(label='Cluster')
+    # plt.grid(True)
+    # plt.show()
+    return df_b1_features
+
+df_b1_clusters = Clustering(df_b1_reduced, df_b1_features)
+
+
+
 InterpetClusters(df_b1_clusters)
 
 def GiveClustersAName(df_b1_clusters):
@@ -196,3 +220,4 @@ def GiveClustersAName(df_b1_clusters):
     df_b1_clusters.to_csv('Eindopdracht/Opdracht3/bearing_features_clusterd.csv')
     
 GiveClustersAName(df_b1_clusters)
+
