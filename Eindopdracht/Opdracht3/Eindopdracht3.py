@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, f1_score, balanced_accuracy_score
 from sklearn.preprocessing import StandardScaler
+import math
 from sklearn.cluster import SpectralClustering
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 from sklearn.mixture import GaussianMixture
@@ -32,6 +33,9 @@ def spectral_flatness(signal):
     return geometric_mean / arithmetic_mean
 
 def crest_factor(signal):
+    """
+    deze functie berekend de crest factor waarde.
+    """
     peak = np.max(np.abs(signal))
     rms = np.sqrt(np.mean(signal**2))
     return peak / rms
@@ -64,6 +68,9 @@ def load_bearing1_features(index, highestStd):
 
 #Opdracht 3b)
 def getData():
+    """
+    Deze funtie haalt de data op en zet dit in een csv bestand.
+    """
     all_features_b1 = []
     highestStd = 0
     for i in range(1724):  # Er zijn 1724 samples (0.csv t/m 1723.csv)
@@ -75,24 +82,39 @@ def getData():
 getData()
 
 def showGraph(df_b1_features):
+    """
+    Deze functie laat grafieken zien van de verschillende features.
+    """
+    n = len(df_b1_features.columns)
+    cols = 3
+    rows = math.ceil(n / cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows), constrained_layout=True)
+    axes = axes.flatten()
+
+    place = 0
     for col in df_b1_features.columns:
         if col != 'time':
-            plt.figure(figsize=(10, 3))
-            plt.plot(df_b1_features['time'], df_b1_features[col])
-            plt.title(f'{col} over tijd')
-            plt.xlabel('Tijd (sample index)')
-            plt.ylabel(col)
-            plt.grid(True)
-            plt.tight_layout()
-            plt.show()
+            axes[place].plot(df_b1_features['time'], df_b1_features[col])
+            axes[place].set_title(f'{col} over tijd')
+            axes[place].set_xlabel('Tijd (sample index)')
+            axes[place].set_ylabel(col)
+            place += 1
+    plt.grid(True)
+    plt.show()
 
 def corrMatrix(df_b1_features):
+    """
+    Deze funtie maakt een correlatie matrix van de verschillende features.
+    """
     corr = df_b1_features.drop(columns='time').corr()
     sns.heatmap(corr, annot=True, cmap='coolwarm', center=0)
     plt.title("Correlatiematrix van bearing 1 features")
     plt.show()
 
 def removeMultiColl(df_b1_features):
+    """
+    Deze functie verwijderd de features die zorgen voor multiCollineairteit.
+    """
     X = df_b1_features.drop(columns=['time'])
     corr_matrix = X.corr().abs()
     upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
@@ -105,13 +127,16 @@ def removeMultiColl(df_b1_features):
 
 
 df_b1_features = pd.read_csv('Eindopdracht/Opdracht3/bearing_features.csv')
-# showGraph(df_b1_features)
+showGraph(df_b1_features)
 corrMatrix(df_b1_features)
 removeMultiColl(df_b1_features)
 df_b1_reduced = pd.read_csv('Eindopdracht/Opdracht3/bearing_features_reduced.csv')
 
 #Opdracht 3c)
 def Clustering(df_b1_clean, df_b1_features):
+    """
+    In deze functie worden de clusters gemaakt.
+    """
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(df_b1_clean)
 
@@ -141,6 +166,9 @@ df_b1_clusters = Clustering(df_b1_reduced, df_b1_features)
 
 #Opdracht 3d)
 def InterpetClusters(df_b1_clusters):
+    """
+    In deze funtie worden de clusters geplot zodat je kunt zien hoe goed het clusteren gelukt is.
+    """
     cluster_summary = df_b1_clusters.groupby('cluster').mean()
     print(cluster_summary)
 
@@ -152,3 +180,6 @@ def InterpetClusters(df_b1_clusters):
     plt.colorbar(label='Cluster')
     plt.show()
 InterpetClusters(df_b1_clusters)
+
+def GiveClustersAName(df_b1_clusters):
+    return True
