@@ -182,4 +182,17 @@ def InterpetClusters(df_b1_clusters):
 InterpetClusters(df_b1_clusters)
 
 def GiveClustersAName(df_b1_clusters):
-    return True
+    clusterNumbers = df_b1_clusters['cluster'].unique()
+    clusterOrder = {}
+    for i in clusterNumbers:
+        filterd_df = df_b1_clusters[df_b1_clusters['cluster'] == i]
+        meanTime = filterd_df['time'].mean()
+        clusterOrder.update({i: meanTime})
+    names = ["early", "normal", "suspect", "roll element failure", "stage 2 failure"]
+    count = 0
+    for key, value in sorted(clusterOrder.items(), key=lambda item: item[1]):
+        df_b1_clusters['cluster'] = df_b1_clusters['cluster'].replace(key, names[count])
+        count += 1
+    df_b1_clusters.to_csv('Eindopdracht/Opdracht3/bearing_features_clusterd.csv')
+    
+GiveClustersAName(df_b1_clusters)
