@@ -133,6 +133,28 @@ corrMatrix(df_b1_features)
 removeMultiColl(df_b1_features)
 df_b1_reduced = pd.read_csv('Eindopdracht/Opdracht3/bearing_features_reduced.csv')
 
+def run_length_score(cluster_labels2):
+    total_runs = 0
+    cluster_labels = cluster_labels2['cluster'].tolist()
+    unique_clusters = set(cluster_labels)
+
+    for cluster in unique_clusters:
+        # Zoek de indexen waar dit cluster voorkomt
+        indices = [i for i, label in enumerate(cluster_labels) if label == cluster]
+        #indices = cluster_labels['time']
+        print(f"Cluster {cluster}, indices: {indices}")
+        # Begin met 1 run
+        runs = 1
+        for i in range(1, len(indices)):
+            if indices[i] != indices[i-1] + 1:
+                runs += 1
+
+        total_runs += runs
+
+    gemiddelde_runs = total_runs / len(unique_clusters)
+    return gemiddelde_runs  # lager = beter (ideaal = 1)
+
+
 #Opdracht 3d)
 def InterpetClusters(df_b1_clusters):
     """
@@ -180,12 +202,12 @@ def Clustering(df_b1_clean, df_b1_features):
         df_b1_clean['cluster'] = labels
         df_b1_features['cluster'] = labels
         
-        wcss.append(kmeans.inertia_)  # inertia_ = WCSS
+        wcss.append(run_length_score(df_b1_features))  # inertia_ = WCSS
         InterpetClusters(df_b1_features)
 
     plt.plot(range(2, 6), wcss, marker='o')
     plt.xlabel('Aantal clusters (k)')
-    plt.ylabel('WCSS')
+    plt.ylabel('Run length')
     plt.title('Elbow-methode')
     plt.show()
     
@@ -224,4 +246,7 @@ def GiveClustersAName(df_b1_clusters):
     df_b1_clusters.to_csv('Eindopdracht/Opdracht3/bearing_features_clusterd.csv')
     
 GiveClustersAName(df_b1_clusters)
+
+
+
 
