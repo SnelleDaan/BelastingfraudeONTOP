@@ -155,8 +155,13 @@ def Clustering(df_b1_clean, df_b1_features):
     """
     In deze functie worden de clusters gemaakt.
     """
+    df_b1_cleanV2 = df_b1_clean.copy()
+    unwanted = ['mean', 'kurtosis', 'crest']
+
+    # Verwijder kolommen waarvan de naam één van de substrings bevat
+    df_b1_cleanV2 = df_b1_cleanV2.loc[:, ~df_b1_cleanV2.columns.str.contains('|'.join(unwanted))]
     scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(df_b1_clean)
+    X_scaled = scaler.fit_transform(df_b1_cleanV2)
 
     kmeans = KMeans(n_clusters=5, random_state=42)
     clusters = kmeans.fit_predict(X_scaled)
@@ -184,7 +189,6 @@ def Clustering(df_b1_clean, df_b1_features):
     plt.title('Elbow-methode')
     plt.show()
     
-
 
     #pca = PCA(n_components=2)
     #X_pca = pca.fit_transform(X_scaled)
