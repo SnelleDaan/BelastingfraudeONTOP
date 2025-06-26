@@ -20,7 +20,12 @@ from sklearn.decomposition import KernelPCA
 import seaborn as sns
 from sklearn.decomposition import PCA
 import hdbscan
+import random
 import os
+
+np.random.seed(42)
+random.seed(42)
+os.environ['PYTHONHASHSEED'] = '42'
 
 #Opdracht 3a)
 fs = 20480
