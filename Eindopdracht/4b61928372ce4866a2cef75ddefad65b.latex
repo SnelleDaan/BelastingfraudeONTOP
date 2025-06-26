@@ -1,0 +1,384 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\includegraphics[width=1.55139in,height=0.82361in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image1.png}
+
+\textbf{Justification Document}
+
+Jinne Haan en Daan Derks
+
+\includegraphics[width=2.82083in,height=1.77361in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image2.png}
+
+1
+
+\textbf{Contents}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+0.1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Excersize 1
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . .
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+5
+\end{minipage} \\
+\midrule()
+\endhead
+0.2 & Excersize 2 &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000} + 2\tabcolsep}}{%
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . .} & 7 \\
+0.3 & Excersize 3 &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000} + 2\tabcolsep}}{%
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . .} & 8 \\
+0.4 &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.6000} + 4\tabcolsep}}{%
+AI gebruik . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . .} & 10 \\
+0.5 &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000} + 2\tabcolsep}}{%
+Wie heeft wat gedaan?} & . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . & 10 \\
+\bottomrule()
+\end{longtable}
+
+2
+
+\textbf{List of Tables}
+
+3
+
+\textbf{List of Figures}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Figuur x in verschillende stadiums . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . .
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+5
+\end{minipage} \\
+\midrule()
+\endhead
+2 & Figuur sns pairplot van de gekozen features . . . . . . . . . . . .
+. . . . . . . . . . . . & 8 \\
+\bottomrule()
+\end{longtable}
+
+4
+
+\textbf{0.1} \textbf{Excersize 1}
+
+\includegraphics[width=6.26805in,height=3.15694in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image3.png}
+
+Figure 1: Figuur x in verschillende stadiums
+
+\begin{quote}
+1.
+
+2. \textbf{Toegevoegde features}
+
+\textbf{Spectral Flatness:} Deze maat vergelijkt het geometrisch
+gemiddelde met het rekenkundig gemid-delde van het vermogensspectrum van
+een signaal. Een hoge spectral flatness duidt op een vlak spectrum, wat
+geassocieerd wordt met storingen of schade aan lagers, doordat defecten
+vaak lei-den tot bredere frequentiecomponenten.
+
+\textbf{Kurtosis:} Kurtosis meet de spitsheid van de verdeling van het
+signaal. Signalen met defecten bevatten vaak plotselinge pieken, wat
+resulteert in een hogere kurtosis. Dit kan een sterk onder-scheidend
+kenmerk zijn tussen gezonde en beschadigde lagers.
+
+\emph{Spectral Flatness: Peeters, B.,} \& \emph{De Roeck, G. (2001).
+Stochastic system identification for operational modal analysis: A
+review. {[}IEEE{]}}
+
+\emph{Kurtosis in fault detection: Randall, R. B. (2011).
+Vibration-based Condition Monitoring. Wiley.}
+
+1. Graphics Type `SHAPE' is not supported yet. Please insert it as
+image.
+\end{quote}
+
+5
+
+\begin{quote}
+\includegraphics[width=5.77917in,height=2.90972in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image4.png}We
+hebben Random Forest en SVM (RBF) gekozen omdat we een sns.pairplot
+hebben gemaakt waarin te zien is dat samples met stage 1 visueel goed te
+scheiden zijn van de andere stadia, terwijl stages 2, 3 en 4 veel
+overlap vertonen. Dit patroon werd bevestigd door een aanvullende
+PCA-analyse: de eerste twee hoofdcomponenten scheiden stage 1 duidelijk
+van de rest, maar tonen sterke overlap tussen de andere drie stadia.
+\end{quote}
+
+Op basis van deze observaties verwachten we dat classificatie van stage
+1 versus de andere stadia relatief eenvoudig is, maar dat het
+onderscheiden van alle vier de degradatiestadia meer complexiteit
+vereist. Daarom kiezen we voor modellen die goed kunnen omgaan met
+niet-lineaire scheidingen en complexe interacties tussen features.
+
+Random Forest is geschikt vanwege zijn robuustheid tegen overfitting,
+het omgaan met overlappende klassen en het leveren van feature
+importance. SVM met RBF-kernel is gekozen vanwege zijn vermogen om
+niet-lineaire beslissingsgrenzen te modelleren, wat waarschijnlijk nodig
+is gezien de overlappende clusters.
+
+\begin{quote}
+1.
+\includegraphics[width=5.60694in,height=2.14167in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image5.png}Graphics
+Type `SHAPE' is not supported yet. Please insert it as image.
+
+De standaarddeviatie en de RMS (root mean square) zijn sterk
+gecorreleerd omdat ze beide de spreiding van de data meten. Het
+gemiddelde is redelijk constant en dat is het enige verschil in de twee
+formules.
+
+2. Random forest is betere op alle 3 de evaluaties dus kiezen we dit
+model
+\end{quote}
+
+6
+
+\begin{quote}
+1. We hebben de cutoff van de multicolineariteit op absolute waarde 0.8
+gezet om minder multicol- ineariteit te krijgen in het model.
+
+2. Graphics Type `SHAPE' is not supported yet. Please insert it as
+image.
+
+\includegraphics[width=2.81944in,height=2.11528in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image6.png}
+
+1. Accuracy is niet een goed model criterea omdat de verdeling van de
+groepen niet gelijk is, er zit veel meer in groep 1 dan in de andere
+groepen. We hebben meer gelet op f1 score.
+
+2. We hebben train set en een test set gebruikt om overfitting te
+voorkomen.
+
+3. Als je voor bearing 4 wilt classificeren dan wel, maar wanneer je
+andere bearings wilt classificeren dan niet want we kunnen er niks over
+zeggen.
+
+4. Een nog uitgebreidere grid-search met meer parameter opties
+
+5. In conclusie is het een goed model om bearing 4 te classificeren maar
+in de praktijk heb je waarschijnlijk meer dan bearing 4 nodig.
+\end{quote}
+
+\textbf{0.2} \textbf{Excersize 2}
+
+\begin{quote}
+1. Graphics Type `SHAPE' is not supported yet. Please insert it as
+image.
+
+\includegraphics[width=2.81944in,height=2.11528in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image7.png}
+\end{quote}
+
+We hebben gekozen voor decision tree regression model omdat de radius in
+stapjes omlaag gaan en decision tree is hier precies voor bedoeld
+
+Graphics Type `SHAPE' is not supported yet. Please insert it as image.
+
+7
+
+\includegraphics[width=2.82083in,height=1.42083in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image8.png}
+
+1. We hebben gekozen voor R2 en MSE. MSE vertelde ons weinig omdat de
+fouten heel klein waren maar relatief houd MSE geen rekening mee. Dus
+vooral gelet op R2\\
+2. Dit model is reliable omdat de R2 score erg hoog is.
+
+3. In de grid-search op meerdere parameters letten.
+
+4. We hebben een model gemaakt dat uitstekend werkt. Dat is te zien aan
+een R2 score van 0.9998 !
+
+\textbf{0.3} \textbf{Excersize 3}
+
+\begin{quote}
+1. We hebben gekozen voor mean, std, max\_std, rms, kurtosis, flatness,
+crest.
+
+We hebben dezelfde features van excersize 1 omdat ze daar al nuttig
+bleken en daarnaast hebben we twee nieuwe features crest en max\_std
+toegevoegd. Crest is de verhouding tussen de piek-waarde en de rms
+waarde van een signaal deze waarde geeft inzicht in hoe `impulsief' een
+trillingsignaal is. Max\_std is de maximale standaard deviatie over de
+tijd dit leek ons een goed idee omdat we de std over de tijd hebben
+geplot en we zagen dat std in sprongen omhoog ging.
+\end{quote}
+
+\includegraphics[width=6.26805in,height=3.15833in]{vertopal_4b61928372ce4866a2cef75ddefad65b/media/image9.png}
+
+Figure 2: Figuur sns pairplot van de gekozen features
+
+\begin{quote}
+1. We hebben gekozen voor K-means clustering en gaussian Mixture omdat
+we wisten dat er 5 groepen waren. Een nadeel aan K-means clustering is
+dat deze slecht omgaat met groepen van verschillende grootte, groep 1 is
+een stuk groter dan de rest bij bearing 4 dus dit zou ook kunnen bij
+bearing 1. K-means en gaussian mixture werkt allebei goed op
+niet-lineare data. We hebben PCA dimensionality reduction geprobeerd
+maar dit maakte de resultaten slechter. We hebben de
+\end{quote}
+
+8
+
+\begin{quote}
+resultaten van verschillende methodes gecritiseerd op een plot van index
+waarbij de verschillende groepen unieke kleuren hebben, bij een perfecte
+clustering zou een groep één aaneengesloten kleur vormen zonder overlap
+met andere kleuren op de index-as. Hoe meer het door de kleuren in de
+war zijn hoe slechter de clustering is gelukt.
+
+1. We hebben van de groep de gemiddelde index gebruikt, vervolgens is de
+volgorde van 0 tot 4 met het laagste gemiddelde als stadium 0 en hoogste
+gemiddelde als stadium 4.
+\end{quote}
+
+9
+
+\textbf{0.4} \textbf{AI gebruik}
+
+We hebben voor verschillende onderdelen AI gebruikt.
+
+Syntax: Het programmeren doen we zelf, we bedenken wat we willen doen en
+hoe de flow ongeveer zal gaan. Wanneer we bezig zijn met programmeren en
+de syntax lukt niet helemaal, dan vragen we ai hoe dat moet en om
+voorbeelden. Een voorbeeld: we hebben gevraagd om voor te doen hoe je
+vanuit de fetch\_ucirepo datasets kunt inladen in python en
+transformeren in een Pandas dataframe. We wisten dat dit kon, maar niet
+precies hoe, want het is de eerste keer dat we met die package werken.
+
+Test-scores: nadat we hebben gekeken naar welke test-score we gaan
+gebruiken hebben we nog even aan ai nagevraagd of dat die het eens is
+met de keuze of, of dat hij toch een andere test-score zou aanraden.
+Hieruit bleek dat we goed bezig waren.
+
+Errors: soms krijgen we errors en is het moeilijk te begrijpen waar het
+mis gaat. Dan vragen we ai om inzicht te bieden in wat er mis gaan en
+een mogelijk oplossing suggestie te krijgen.
+
+\textbf{0.5} \textbf{Wie heeft wat gedaan?}
+
+We hebben samen aan alle code gewerkt. Dit hebben we gedaan door naast
+elkaar te zitten en te pro-grammeren, meestal hebben we dan allebei
+kleine taken die de hele tijd samen vallen. We hebben naast elkaar
+samengewerkt via de `live share' extensie van visual studio code gemaakt
+door Microsoft. Op deze manier kunnen we een beetje als een online word
+document tegelijk in een document typen.
+
+Alle keuzes die gemaakt zijn tijdens deze opdracht zijn dan ook samen
+genomen en overlegd.
+
+Het justification document is gemaakt door:\\
+Keuze van de datasets: Daan\\
+Gemaakte keuzes: beide\\
+AI gebruik: Jinne\\
+Wie heeft wat gedaan?: beide
+
+Sources:\\
+OpenAI. (2023). \emph{ChatGPT} (Mar 14 version) {[}Large language
+model{]}. https://chat.openai.com/
+
+chat
+
+\emph{Course modules: FEB25: - Data Science 8}. (n.d.).
+https://canvas.fontys.nl/courses/26895
+
+/modules
+
+10
+
+\end{document}
