@@ -140,6 +140,17 @@ removeMultiColl(df_b1_features)
 df_b1_reduced = pd.read_csv('Eindopdracht/Opdracht3/bearing_features_reduced.csv')
 
 def run_length_score(cluster_labels2):
+    """
+    Berekent de gemiddelde run length score per cluster, waarbij een run wordt 
+    gedefinieerd als een aaneengesloten reeks van dezelfde clusterlabels. 
+    Een lagere score duidt op betere temporele clustering (ideaal = 1).
+
+    Parameters:
+        cluster_labels2 (pd.DataFrame): DataFrame met een kolom 'cluster' en 'time'.
+
+    Returns:
+        float: Gemiddeld aantal runs per cluster.
+    """
     total_runs = 0
     cluster_labels = cluster_labels2['cluster'].tolist()
     unique_clusters = set(cluster_labels)
@@ -168,12 +179,12 @@ def InterpetClusters(df_b1_clusters):
     """
     cluster_summary = df_b1_clusters.groupby('cluster').mean()
     print(cluster_summary)
-
+    #Plotten van de Cluster
     plt.figure(figsize=(10, 4))
     plt.scatter(df_b1_clusters['time'], df_b1_clusters['mean_b1x'], c=df_b1_clusters['cluster'], cmap='viridis')
-    plt.title('RMS b1x over tijd, gekleurd per cluster')
+    plt.title('Mean b1x over tijd, gekleurd per cluster')
     plt.xlabel('Sample index (tijd)')
-    plt.ylabel('RMS b1x')
+    plt.ylabel('Mean b1x')
     plt.colorbar(label='Cluster')
     plt.show()
     
@@ -190,45 +201,29 @@ def Clustering(df_b1_clean, df_b1_features):
     df_b1_cleanV2 = df_b1_cleanV2.loc[:, ~df_b1_cleanV2.columns.str.contains('|'.join(unwanted))]
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(df_b1_cleanV2)
-
-    kmeans = KMeans(n_clusters=5, random_state=42)
-    clusters = kmeans.fit_predict(X_scaled)
     
-    clusterer = hdbscan.HDBSCAN(min_cluster_size=40)
-    labels = clusterer.fit_predict(X_scaled)
-    
-    #gmm = GaussianMixture(n_components=5, random_state=42)
-    #labels = gmm.fit_predict(X_scaled)
-
-    wcss = []
+    #De verschillende scores berekenen
+    ClusterScore = []
     for k in range(2, 6):
         kmeans = KMeans(n_clusters=k, random_state=42).fit(X_scaled)
         labels = kmeans.predict(X_scaled)
-        
-        df_b1_clean['cluster'] = labels
         df_b1_features['cluster'] = labels
         
-        wcss.append(run_length_score(df_b1_features))  # inertia_ = WCSS
+        ClusterScore.append(run_length_score(df_b1_features))  # inertia_ = WCSS
         InterpetClusters(df_b1_features)
 
-    plt.plot(range(2, 6), wcss, marker='o')
+    #Plotten van de scores
+    plt.plot(range(2, 6), ClusterScore, marker='o')
     plt.xlabel('Aantal clusters (k)')
     plt.ylabel('Run length')
-    plt.title('Elbow-methode')
+    plt.title('Cluster-scores')
     plt.show()
-    
 
-    #pca = PCA(n_components=2)
-    #X_pca = pca.fit_transform(X_scaled)
-
-    # plt.figure(figsize=(8, 5))
-    # plt.scatter(X_pca[:, 0], X_pca[:, 1], c=clusters, cmap='viridis', s=50)
-    # plt.title('PCA-visualisatie van clusters')
-    # plt.xlabel('PC 1')
-    # plt.ylabel('PC 2')
-    # plt.colorbar(label='Cluster')
-    # plt.grid(True)
-    # plt.show()
+    #De beste clusters opslaan
+    clusterNumber = np.argmin(ClusterScore) + 2
+    kmeans = KMeans(n_clusters=clusterNumber, random_state=42).fit(X_scaled)
+    labels = kmeans.predict(X_scaled)
+    df_b1_features['cluster'] = labels
     return df_b1_features
 
 df_b1_clusters = Clustering(df_b1_reduced, df_b1_features)
@@ -238,6 +233,13 @@ df_b1_clusters = Clustering(df_b1_reduced, df_b1_features)
 InterpetClusters(df_b1_clusters)
 
 def GiveClustersAName(df_b1_clusters):
+    """
+    Geeft betekenisvolle namen aan clusters op basis van hun gemiddelde tijdstip.
+    
+    De functie bepaalt de gemiddelde tijd (sample index) van elk cluster, sorteert de clusters 
+    chronologisch en wijst vervolgens vooraf gedefinieerde stadium-namen toe (zoals 'early', 
+    'normal', etc.). Het resultaat wordt opgeslagen in een CSV-bestand.
+    """
     clusterNumbers = df_b1_clusters['cluster'].unique()
     clusterOrder = {}
     for i in clusterNumbers:
