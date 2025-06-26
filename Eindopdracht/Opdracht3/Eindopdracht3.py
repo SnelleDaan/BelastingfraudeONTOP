@@ -33,7 +33,8 @@ def spectral_flatness(signal):
     """
     Bereken spectral flatness via Welch's methode.
     """
-    freqs, power = welch(signal, fs=fs)
+    signal = np.asarray(signal) 
+    freqs, power = (welch(signal, fs=fs))
     geometric_mean = np.exp(np.mean(np.log(power + 1e-12)))  # voorkom log(0)
     arithmetic_mean = np.mean(power)
     return geometric_mean / arithmetic_mean
